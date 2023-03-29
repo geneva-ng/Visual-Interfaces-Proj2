@@ -126,6 +126,8 @@ def main():
             T = compute_texture_difference(histTex, histTex_op)
             S = shape_difference(bin_img, bin_img_op)
 
+            #EXPERIMENTATION WITH DIFFERENT METRIC WEIGHTS FOR THE SIMPLEX VECTOR
+                
             # #gestalt = grand_total_score = 11852
             # i_weight = 0.33     #color
             # s_weight = 0.22     #shape
@@ -154,25 +156,6 @@ def main():
     html = '<table border="1" cellspacing="0" cellpadding="5">\n'
     html += '<tr><th>q</th><th>t1</th><th>t2</th><th>t3</th><th>score</th></tr>\n'
 
-    # grand_total_score = 0
-
-    # for row in g_values:
-    #     filename, thumbnail, top3 = row
-    #     html += f'<tr><td>{thumbnail}<br>{filename}</td>'
-
-    #     row_score = 0
-
-    #     for otherFile, _ in top3:
-    #         img_op = cv2.imread(os.path.join(directory, otherFile))
-    #         thumbnail_op = create_thumbnail(img_op)
-    #         file_index = int(otherFile[1:3]) - 1
-    #         current_q = crowd_data[image_files.index(filename)][file_index]
-    #         row_score += current_q
-    #         html += f'<td>{thumbnail_op}<br>{otherFile}<br>q: {current_q}</td>'
-
-    #     grand_total_score += row_score
-    #     html += f'<td>{row_score}</td></tr>\n'
-
     grand_total_score = 0
 
     for row in g_values:
@@ -186,18 +169,11 @@ def main():
             thumbnail_op = create_thumbnail(img_op)
             file_index = int(otherFile[1:3]) - 1
             current_q = crowd_data[image_files.index(filename)][file_index]
-
-            # Cap current_q at 3 if it's greater than 3
-            if current_q > 3:
-                current_q = 3
-
             row_score += current_q
             html += f'<td>{thumbnail_op}<br>{otherFile}<br>q: {current_q}</td>'
 
         grand_total_score += row_score
         html += f'<td>{row_score}</td></tr>\n'
-
-    
 
     html += '</table>'
 
